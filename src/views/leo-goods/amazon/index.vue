@@ -91,8 +91,8 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      queryForm: {"images":"","mainImage":"","subject":"","tag":"","platform":""},
-      temp: {"images":"","mainImage":"","subject":"","tag":"","platform":""},
+      queryForm: {'images':'','mainImage':'','subject':'','tag':'','platform':''},
+      temp: {'images':'','mainImage':'','subject':'','tag':'','platform':''},
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -139,7 +139,7 @@ export default {
       this.handleFilter()
     },
     resetTemp() {
-      Object.keys(this.temp).forEach(key=>{
+      Object.keys(this.temp).forEach(key => {
         this.temp[key] = null
       })
     },

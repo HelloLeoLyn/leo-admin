@@ -24,9 +24,9 @@ export default {
   data() {
     return {
       data: null,
-      apiKey: "w54AkJkm1zp36wZW16zXPjnv",
-      dialogImageUrl: "",
-      newImageUrl: "",
+      apiKey: 'w54AkJkm1zp36wZW16zXPjnv',
+      dialogImageUrl: '',
+      newImageUrl: '',
       dialogVisible: false,
       file: null,
       imageUrl: '',
@@ -36,20 +36,15 @@ export default {
     this.imageUrl = this.images[0].url
   },
   methods: {
-    onChange(file, fileList) {
+    onChange(file) {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     onSuccess(a, b, c) {
       console.log(a, b, c);
     },
-    customzedRequest(data) {
-    },
     handleBeforeUpload(file) {
       this.file = file
     },
-    handleRemove(file, fileList) {
-    },
-
     ArrayBufferToBase64(buffer) {
       let binary = ''
       let bytes = new Uint8Array(buffer)
@@ -60,28 +55,28 @@ export default {
       return window.btoa(binary)
     },
     execute() {
-      const FormData = require("form-data");
+      const FormData = require('form-data');
       const formData = new FormData();
-      formData.append("size", "auto");
-      formData.append("image_file", this.file);
+      formData.append('size', 'auto');
+      formData.append('image_file', this.file);
       axios({
-        method: "post",
-        url: "https://api.remove.bg/v1.0/removebg",
+        method: 'post',
+        url: 'https://api.remove.bg/v1.0/removebg',
         data: formData,
-        responseType: "arraybuffer",
+        responseType: 'arraybuffer',
         headers: {
-          "X-Api-Key": this.apiKey,
+          'X-Api-Key': this.apiKey,
         },
         encoding: null
       })
         .then((response) => {
           if (response.status != 200)
-            return console.error("Error:", response.status, response.statusText);
+            return console.error('Error:', response.status, response.statusText);
           console.log(response);
           this.newImageUrl = 'data:image/jpeg;base64,' + this.ArrayBufferToBase64(response.data)
         })
         .catch((error) => {
-          return console.error("Request failed:", error);
+          return console.error('Request failed:', error);
         });
     }
   },

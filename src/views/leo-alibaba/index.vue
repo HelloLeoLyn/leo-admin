@@ -143,7 +143,6 @@ import {
   api_productAlibaba_referLocal,
   api_product_alibaba_delete,
   api_productAlibaba_repost,
-  api_productAlibaba_edit
 } from '@/api/leo-product-alibaba'
 import { api_alibaba_auth } from '@/api/leo-alibaba'
 export default {
@@ -189,7 +188,7 @@ export default {
   methods: {
     onUploadImagesConfirm() {
     },
-    sendToAliexpress(row){
+    sendToAliexpress(row) {
       this.$router.push({path:'/leo-goods/aliexpress-prepare/' + row.localProductId,query:{subject:row.subject}})
     },
     handleReferClick(row, index) {
@@ -214,6 +213,7 @@ export default {
       })
     },
     handleUpdateAlibaba(row, index) {
+      console.log(row,index);
       // this.$confirm('是否删除数据？请确认！').then(() => {
       //   api_productAlibaba_edit(row.productID).then((res) => {
       //     this.$notify.success(res.msg)

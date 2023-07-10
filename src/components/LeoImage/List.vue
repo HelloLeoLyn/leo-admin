@@ -232,8 +232,8 @@ export default {
     },
 
     handleRemoveBtnClick(id) {
-     this.checkedList.splice(id,1)
-     this.getImages()
+      this.checkedList.splice(id,1)
+      this.getImages()
     }
   }
 }

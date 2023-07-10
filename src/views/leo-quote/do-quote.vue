@@ -349,7 +349,7 @@ export default {
     getImageByProductId(id, pixel) {
       return getImageByProductId(id, pixel)
     },
-    handleSyncOneItem(row, index) {
+    handleSyncOneItem(row) {
       this.$set(row, 'loading', true)
     },
     handleSyncQuote() {

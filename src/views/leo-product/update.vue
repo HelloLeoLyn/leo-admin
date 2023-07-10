@@ -249,7 +249,7 @@ export default {
       }
       const keys = Object.keys(this.modelYear);
       let years = []
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         for (let key of keys) {
           const value = this.modelYear[key];
           if (key.indexOf(selectedText) >= 0) {

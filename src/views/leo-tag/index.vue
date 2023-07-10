@@ -79,8 +79,8 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      queryForm: {"name":"","type":""},
-      temp: {"name":"","type":""},
+      queryForm: {'name':'','type':''},
+      temp: {'name':'','type':''},
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -127,7 +127,7 @@ export default {
       this.handleFilter()
     },
     resetTemp() {
-      Object.keys(this.temp).forEach(key=>{
+      Object.keys(this.temp).forEach(key => {
         this.temp[key] = null
       })
     },

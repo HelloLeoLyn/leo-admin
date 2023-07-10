@@ -26,10 +26,9 @@ export default {
     }
   },
   created() {
-    //连接WebSocket服务端，然后初始化监听事件
-    this.ws = new WebSocket("ws://localhost:8080/websocket/test");
+    // 连接WebSocket服务端，然后初始化监听事件
+    this.ws = new WebSocket('ws://localhost:8080/websocket/test');
     this.wsInit();
-
   },
   methods: {
     click() {
@@ -38,15 +37,15 @@ export default {
     },
     wsInit() {
       this.ws.onopen = () => {
-        this.ws.send("服务已连接");
+        this.ws.send('服务已连接');
         console.log(this.ws.readyState)
       }
       this.ws.onclose = () => {
-        console.log("服务器关闭")
+        console.log('服务器关闭')
         console.log(this.ws.readyState)
       }
       this.ws.onmessage = (message) => {
-        console.log("收到服务器消息")
+        console.log('收到服务器消息')
         console.log(message)
         console.log(this.ws.readyState)
         this.$notify({
@@ -57,11 +56,10 @@ export default {
         this.isDot = true
       }
       this.ws.onerror = (error) => {
-        console.log("报错了")
+        console.log('报错了')
         console.log(error)
         console.log(this.ws.readyState)
       }
-
     }
   }
 }

@@ -83,7 +83,7 @@
 }
 </style>
 <script>
-import LeoProductMergeMain from "./components/Merge.vue"
+import LeoProductMergeMain from './components/Merge.vue'
 import waves from '@/directive/waves' // waves directive
 import LeoHistory from '@/views/leo-warehouse/components/LeoHistory.vue'
 import {

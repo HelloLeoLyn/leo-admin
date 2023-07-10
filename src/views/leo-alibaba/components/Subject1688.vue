@@ -15,7 +15,7 @@
         <el-form-item label="新标题">
           <el-input v-model="subject" type="textarea" placeholder="请输入subject" :maxlength="60"
             :style="{width: '100%'}" show-word-limit>
-            
+
           </el-input>
         </el-form-item>
         <el-button  @click="onConfrimSetSubject">confirm</el-button>

@@ -307,7 +307,7 @@ import { api_python_image_goods_post } from '@/api/leo-python'
 import { imgBase } from '@/api/index'
 import { api_product_alibaba_save } from '@/api/leo-product-alibaba'
 import { listToString } from '@/utils'
-import { api_image_put } from '@/api/leo-image'
+// import { api_image_put } from '@/api/leo-image'
 export default {
   components: {
     Images,
@@ -507,7 +507,7 @@ export default {
       this.dialog.coverCode = this.product.code[0]
       this.form.alibaba.categoryID = this.product.categoryId
 
-      //aliexpress
+      // aliexpress
       this.form.aliexpress.oem = listToString(this.product.code, ',')
       if (this.product.jsonList && this.product.jsonList.length > 0) {
         let size = this.product.jsonList[0].json.base
@@ -541,42 +541,42 @@ export default {
       this.dialog.cutImgHref = e.dataURL
     },
     sendToAlibaba() {
-      let _this = this
+      // let _this = this
       this.form.images.forEach(element => {
-        if(element.state==2){
+        if(element.state==2) {
           return
         }
         let image = new Image()
         image.src = element.url
         image.setAttribute('crossOrigin', 'anonymous')
-        image.onload = function () {
-          let base64 = getBase64Image(image)
-          let newFile = dataURLtoFile(base64, element.uid)
-          let formData = new FormData();
-          formData.append("file", newFile);
-          formData.append("albumID", _this.albumId);
-          axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
-            "Content-Type": "multipart/form-data;charset=utf-8"
-          })
-            .then(res => {
-              if (res.data === "SUCCESS") {
-                element.state = 2
-                let iData = {
-                  id: element.id,
-                  url: data.url,
-                  state: element.state
-                }
-                api_image_put(iData).then(({msg}) => {
-                  this.$notify({
-                    title: '成功',
-                    message: msg,
-                    type: 'success',
-                    duration: 1000
-                  });
-                })
-              }
-            })
-        }
+        // image.onload = function () {
+        //   let base64 = getBase64Image(image)
+        //   let newFile = dataURLtoFile(base64, element.uid)
+        //   let formData = new FormData();
+        //   formData.append('file', newFile);
+        //   formData.append('albumID', _this.albumId);
+        //   axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
+        //     'Content-Type': 'multipart/form-data;charset=utf-8'
+        //   })
+        //     .then(res => {
+        //       if (res.data === 'SUCCESS') {
+        //         element.state = 2
+        //         let iData = {
+        //           id: element.id,
+        //           url: data.url,
+        //           state: element.state
+        //         }
+        //         api_image_put(iData).then(({msg}) => {
+        //           this.$notify({
+        //             title: '成功',
+        //             message: msg,
+        //             type: 'success',
+        //             duration: 1000
+        //           });
+        //         })
+        //       }
+        //     })
+        // }
       });
     },
     onAlibabaCoverClk(img, opt) {

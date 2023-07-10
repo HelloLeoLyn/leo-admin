@@ -2,7 +2,7 @@
 export default {
   props: ['value'],
   render: function(createElement) {
-    var self = this
+    let self = this
     return createElement('input', {
       domProps: {
         value: self.value

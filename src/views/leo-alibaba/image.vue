@@ -43,30 +43,29 @@
 </template>
 <script>
 /**
- * 
-c	
-String	
-是	
-相册名称。最长30个中文字符	
-description	
-String	
-否	
-相册描述。最长2000个中文字符，国际站无需处理此字段	
-authority	
-Integer	
-是	
-相册访问权限。取值范围:0-不公开；1-公开；2-密码访问。只有开通旺铺的会员可以设置相册访问权限为“1-公开”和“2-密码访问”，未开通旺铺的会员相册访问权限限制为“0-不公开”，国际站无需处理此字段	
-password	
-String	
-否	
-相册访问密码。4-16位非中文字符。当authority为2-密码访问时必填，国际站无需处理此字段	
-webSite	
-String	
-是	
+ *
+c
+String
+是
+相册名称。最长30个中文字符
+description
+String
+否
+相册描述。最长2000个中文字符，国际站无需处理此字段
+authority
+Integer
+是
+相册访问权限。取值范围:0-不公开；1-公开；2-密码访问。只有开通旺铺的会员可以设置相册访问权限为“1-公开”和“2-密码访问”，未开通旺铺的会员相册访问权限限制为“0-不公开”，国际站无需处理此字段
+password
+String
+否
+相册访问密码。4-16位非中文字符。当authority为2-密码访问时必填，国际站无需处理此字段
+webSite
+String
+是
 站点信息，指定调用的API是属于国际站（alibaba）还是1688网站（1688）
  */
-const formData = new FormData()
-import axios from "axios";
+import axios from 'axios';
 import { api_photo_alibaba_album_add } from '@/api/leo-photo'
 export default {
   data() {
@@ -93,7 +92,7 @@ export default {
     }
   },
   methods: {
-    //点击上传文件触发的额外事件,清空fileList
+    // 点击上传文件触发的额外事件,清空fileList
     delFile() {
       this.fileList = [];
     },
@@ -101,24 +100,24 @@ export default {
       this.fileList = fileList;
       // console.log(this.fileList, "sb");
     },
-    //自定义上传文件
+    // 自定义上传文件
     uploadFile(file) {
-      this.formData.append("file", file.file);
+      this.formData.append('file', file.file);
       // console.log(file.file, "sb2");
     },
 
 
     onsubmit() {
-      //保存按钮
+      // 保存按钮
       let formData = new FormData();
-      formData.append("file", this.fileList[0].raw);//拿到存在fileList的文件存放到formData中
-      //下面数据是我自己设置的数据,可自行添加数据到formData(使用键值对方式存储)
-      formData.append("albumID", this.image.albumID);
+      formData.append('file', this.fileList[0].raw);// 拿到存在fileList的文件存放到formData中
+      // 下面数据是我自己设置的数据,可自行添加数据到formData(使用键值对方式存储)
+      formData.append('albumID', this.image.albumID);
       axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
-        "Content-Type": "multipart/form-data;charset=utf-8"
+        'Content-Type': 'multipart/form-data;charset=utf-8'
       })
         .then(res => {
-          if (res.data === "SUCCESS") {
+          if (res.data === 'SUCCESS') {
             this.$notify({
               title: '成功',
               message: '提交成功',
@@ -127,24 +126,8 @@ export default {
             });
           }
         })
-
     }
     ,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     handleCreateAlibabaAlbum() {

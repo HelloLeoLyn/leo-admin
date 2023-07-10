@@ -143,7 +143,6 @@ export default {
     ShippingInfo1688,
     Description1688,
     LeoHistory,
-    Description1688
   },
   props: [],
   data() {
@@ -404,7 +403,6 @@ export default {
           })
         })
       })
-
     },
     resetForm() {
       this.$refs['elForm'].resetFields()

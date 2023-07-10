@@ -55,11 +55,9 @@ export function readFileAsBytes(file) {
       const byteArray = new Uint8Array(arrayBuffer);
       resolve(byteArray);
     };
-
-    reader.onerror = function(event) {
+    reader.onerror = function() {
       reject(new Error('Failed to read file.'));
     };
-
     reader.readAsArrayBuffer(file);
   });
 }

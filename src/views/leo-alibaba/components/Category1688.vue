@@ -14,8 +14,8 @@ import { listToString } from '@/utils//index'
 import { category1688 } from '@/utils/category'
 export default {
   model:{
-    prop:"value",
-    event:"change"
+    prop:'value',
+    event:'change'
   },
   props: {
     value: {

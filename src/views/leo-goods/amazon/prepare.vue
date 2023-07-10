@@ -63,7 +63,7 @@ export default {
         })
       })
     },
-    getImages(e) { 
+    getImages(e) {
       this.form.Images = JSON.stringify(e)
     },
   }

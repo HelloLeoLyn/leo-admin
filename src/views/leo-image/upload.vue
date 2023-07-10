@@ -8,7 +8,7 @@
         :width="col.width">
       </el-table-column>
     </el-table>
-    
+
   </div>
 </template>
 <script>

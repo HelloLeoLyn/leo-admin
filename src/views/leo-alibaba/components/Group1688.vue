@@ -17,8 +17,6 @@
 <script>
 import { category1688Group, categoryToGroup } from '@/utils/category'
 import Category1688Edit from '@/views/leo-alibaba/category/components/Edit.vue'
-import { api_property_get } from '@/api/leo-property'
-const LEO_AIBABA_GROUP = 'LEO_AIBABA_GROUP'
 export default {
   components: { Category1688Edit },
   props: {

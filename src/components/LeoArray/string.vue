@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { listToString } from "@/utils/index";
+import { listToString } from '@/utils/index';
 import clipboard from '@/directive/clipboard/index.js' // use clipboard by v-directive
 export default {
   directives: {

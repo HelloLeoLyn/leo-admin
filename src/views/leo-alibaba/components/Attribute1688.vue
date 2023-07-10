@@ -170,7 +170,7 @@ export default {
         })
       } else {
         api_alibaba_category_attribute_post(this.params).then((res) => {
-          if(res.data.errorCode){
+          if(res.data.errorCode) {
             return
           }
           const list1 = res.data.attributes.filter((a) => a.required)

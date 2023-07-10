@@ -22,11 +22,11 @@
 <script>
 const json = require('@/views/leo-development/navigation/data.json');
 export default {
-    data() {
-        return {
-            json
-        }
+  data() {
+    return {
+      json
     }
+  }
 }
 </script>
 <style lang="scss">

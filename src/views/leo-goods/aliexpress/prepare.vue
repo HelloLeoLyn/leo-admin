@@ -420,26 +420,26 @@ export default {
     handlePreview() {
       this.preview.form = this.form
       this.preview.form = this.form
-      //images
+      // images
       const img = {
         url: '@{images[i]}'
       }
       this.preview.images[0] = img
-      //packing
+      // packing
       this.preview.packing.sizeUrl = this.package.size
       this.preview.packing.weight = this.form.weight
       this.preview.packing.size = this.form.packageSize
       this.preview.packing.cover = '@{packing.cover}'
 
-      //company
+      // company
       this.preview.company.image = 'https://ae01.alicdn.com/kf/S95d3f25cb00d415c991a5031280f38505.png'
-      //Factory
+      // Factory
       this.preview.factory.images = ['https://ae01.alicdn.com/kf/S1664da71095c4341b2a6e24924e6e85f5.png',
         'https://ae01.alicdn.com/kf/Sa537edb987d3409d922525e6992040dfJ.png',
         'https://ae01.alicdn.com/kf/S95cc1031bf8843c39dd468efbab787eef.png']
 
 
-      //cert
+      // cert
       this.preview.cert.images = ['https://ae01.alicdn.com/kf/Sfc6c53c7858b47618f3e1f8deda63b0cF.png',
         'https://ae01.alicdn.com/kf/Se6fb480ff2944e8f9423b3a6b243564dM.png',
         'https://ae01.alicdn.com/kf/S1af74204154c45ff96951dd8f6ab53963.png']
@@ -448,19 +448,16 @@ export default {
     onConfirmPreview() {
 
 
-      //faq
+      // faq
     },
     packageSizeChange(e) {
       if (e == '21cm*12cm*9.5cm') {
         this.package.size = 'https://ae01.alicdn.com/kf/Se74b334a2a66473ebe5505e8e9d32b04m.png'
-
       } else {
         this.package.size = 'https://ae01.alicdn.com/kf/Se74b334a2a66473ebe5505e8e9d32b04m.png'
-
       }
-
     },
-    handleClick(tab, event) {
+    handleClick(tab) {
       this.jump(tab.index)
     },
     jump(index) {

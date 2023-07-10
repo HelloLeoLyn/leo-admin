@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import { getBase64Image, dataURLtoFile, convertBase64UrlToBlob } from "@/utils/image";
-import axios from "axios";
+import { getBase64Image, dataURLtoFile, convertBase64UrlToBlob } from '@/utils/image';
+import axios from 'axios';
 export default {
   props: {
     albumId: {
@@ -28,11 +28,11 @@ export default {
     return {
     }
   },
-  created(){
+  created() {
     console.log(this.albumId);
   },
   methods: {
-    //点击上传文件触发的额外事件,清空fileList
+    // 点击上传文件触发的额外事件,清空fileList
     delFile() {
       this.fileList = [];
     },
@@ -40,9 +40,9 @@ export default {
       this.fileList = fileList;
     },
 
-    //自定义上传文件
+    // 自定义上传文件
     uploadFile(file) {
-      this.formData.append("file", file.file);
+      this.formData.append('file', file.file);
     },
 
     onsubmit() {
@@ -56,13 +56,13 @@ export default {
           let base64 = getBase64Image(image)
           let newFile = dataURLtoFile(base64, element.uid)
           let formData = new FormData();
-          formData.append("file", newFile);
-          formData.append("albumID", _this.albumId);
+          formData.append('file', newFile);
+          formData.append('albumID', _this.albumId);
           axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
-            "Content-Type": "multipart/form-data;charset=utf-8"
+            'Content-Type': 'multipart/form-data;charset=utf-8'
           })
             .then(res => {
-              if (res.data === "SUCCESS") {
+              if (res.data === 'SUCCESS') {
                 this.$notify({
                   title: '成功',
                   message: '提交成功',

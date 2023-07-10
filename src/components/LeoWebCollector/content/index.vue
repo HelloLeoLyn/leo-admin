@@ -338,10 +338,10 @@ export default {
         api_product_bing_img({ code: this.autoPart.code }).then((res) => {
           this.images = res.data.map((element) => {
             const { mediaurl, exph, expw, id } = getQueryObject(element.url)
-            //height:100px;width:100px;
+            // height:100px;width:100px;
             console.log(element.style)
             let b = element.style.substr(6)
-            let c = b.indexOf(";")
+            let c = b.indexOf(';')
             let d = b.substr(0, c)
             console.log(b, c, d);
             const height = 228

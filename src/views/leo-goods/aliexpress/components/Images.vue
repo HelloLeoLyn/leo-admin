@@ -203,7 +203,7 @@ export default {
     imageDownload() {
       this.visible = false
       this.$emit('newImageUrl',this.cutImgHref)
-      const images = this.images.filter(img=> img.checked)
+      const images = this.images.filter(img => img.checked)
       console.log(images);
       this.$emit('getImages',images)
     },

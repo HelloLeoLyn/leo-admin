@@ -153,15 +153,15 @@ export default {
     return {
       menus: [
         {
-          "label": "图片",
+          'label': '图片',
         }, {
-          "label": "oe",
+          'label': 'oe',
         }, {
-          "label": "refNo",
+          'label': 'refNo',
         }, {
-          "label": "model",
+          'label': 'model',
         }, {
-          "label": "others",
+          'label': 'others',
         }],
       activeName: 'tab0',
       checked: {
@@ -186,7 +186,7 @@ export default {
   },
   created() {
     this.info.images = this.list[0].images.concat(this.list[1].images)
-    this.info.code = this.list[0].code.concat(this.list[1].code) 
+    this.info.code = this.list[0].code.concat(this.list[1].code)
     this.info.refNo = [...this.list[0].refNo]
     this.info.model = JSON.stringify(this.list[0].model)
     if (this.list[0].weight) {
@@ -247,7 +247,7 @@ export default {
         this.info.weight = this.list[1].weight
       }
     },
-    handleClick(tab, event) {
+    handleClick(tab) {
       this.jump(tab.index)
     },
     dataScroll() {
@@ -269,18 +269,18 @@ export default {
     },
     // 用循环的方式将每个标题离顶部的距离与滚动条当前位置对比来确定哪个标题需要变为高亮
     loadScroll: function () {
-      var self = this;
-      var sections = document.getElementsByClassName('section');
-      for (var i = sections.length - 1; i >= 0; i--) {
+      let self = this;
+      let sections = document.getElementsByClassName('section');
+      for (let i = sections.length - 1; i >= 0; i--) {
         if (self.scroll >= sections[i].offsetTop - 100) {
-          //我在上面规定了每个el-tab-pane标签的name属性值为tab+该标签的index值
+          // 我在上面规定了每个el-tab-pane标签的name属性值为tab+该标签的index值
           self.activeName = 'tab' + i
           break;
         }
       }
     }
   }, watch: {
-    //监听scroll变量，只要滚动条位置变化就会执行方法loadScroll
+    // 监听scroll变量，只要滚动条位置变化就会执行方法loadScroll
     scroll: function () {
       this.loadScroll()
     }
