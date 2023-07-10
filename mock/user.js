@@ -1,4 +1,3 @@
-
 const tokens = {
   admin: {
     token: 'admin-token'
@@ -22,6 +21,7 @@ const users = {
     name: 'Normal Editor'
   }
 }
+
 
 module.exports = [
   // user login

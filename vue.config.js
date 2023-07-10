@@ -80,7 +80,12 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-
+    // config.module 0.5.5
+    //   .rule('html')
+    //   .test(/\.html$/)
+    //   .use('html-loader')
+    //   .loader('html-loader')
+    //   .end()
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
@@ -88,7 +93,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

@@ -66,8 +66,13 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/access/success',
+    component: () => import('@/views/leo-access/success'),
+    hidden: true
+  },
+  {
     path: '/401',
-    component: () => import('@/views/error-page/401'),
+    component: () => import('@/views/leo-product/collection'),
     hidden: true
   },
   {
@@ -83,18 +88,18 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: 'Documentation', icon: 'documentation', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/guide',
     component: Layout,
@@ -105,6 +110,36 @@ export const constantRoutes = [
         component: () => import('@/views/guide/index'),
         name: 'Guide',
         meta: { title: 'Guide', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/leo-development',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Development',
+    meta: {
+      title: 'Development Pages',
+      icon: '404'
+    },
+    children: [
+      {
+        path: 'tools',
+        component: () => import('@/views/leo-development/tools'),
+        name: 'LeoDevelopmentTools',
+        meta: { title: 'Tools', noCache: true }
+      },
+      {
+        path: 'resources',
+        component: () => import('@/views/leo-development/resources'),
+        name: 'LeoDevelopmentResources',
+        meta: { title: 'Resources', noCache: true }
+      },
+      {
+        path: 'navigation',
+        component: () => import('@/views/leo-development/navigation'),
+        name: 'LeoDevelopmentNavigation',
+        meta: { title: 'Navigation', noCache: true }
       }
     ]
   },

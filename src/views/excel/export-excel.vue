@@ -5,15 +5,18 @@
       <FilenameOption v-model="filename" />
       <AutoWidthOption v-model="autoWidth" />
       <BookTypeOption v-model="bookType" />
-      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
+      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary"
+        icon="el-icon-document" @click="handleDownload">
         Export Excel
       </el-button>
-      <a href="https://panjiachen.github.io/vue-element-admin-site/feature/component/excel.html" target="_blank" style="margin-left:15px;">
+      <a href="https://panjiachen.github.io/vue-element-admin-site/feature/component/excel.html"
+        target="_blank" style="margin-left:15px;">
         <el-tag type="info">Documentation</el-tag>
       </a>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading..." border fit highlight-current-row>
+    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading..." border fit
+      highlight-current-row>
       <el-table-column align="center" label="Id" width="95">
         <template slot-scope="scope">
           {{ scope.$index }}
@@ -71,14 +74,14 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      fetchList().then(response => {
+      fetchList().then((response) => {
         this.list = response.data.items
         this.listLoading = false
       })
     },
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
+      import('@/vendor/Export2Excel').then((excel) => {
         const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
         const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
         const list = this.list
@@ -94,13 +97,17 @@ export default {
       })
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+      const data = jsonData.map((v) =>
+        filterVal.map((j) => {
+          if (j === 'timestamp') {
+            return parseTime(v[j])
+          } else {
+            return v[j]
+          }
+        })
+      )
+      console.log(data)
+      return data
     }
   }
 }

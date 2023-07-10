@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+export const api = 'http://localhost:8081'
 
 export function login(data) {
   return request({
@@ -22,3 +23,12 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getMenusByRoles(roles) {
+  return request({
+    url: '/vue-element-admin/menu/roles',
+    method: 'post',
+    roles
+  })
+}
+

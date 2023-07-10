@@ -45,7 +45,7 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -120,7 +120,7 @@ export function getQueryObject(url) {
 export function byteLength(str) {
   // returns the byte length of an utf8 string
   let s = str.length
-  for (var i = str.length - 1; i >= 0; i--) {
+  for (let i = str.length - 1; i >= 0; i--) {
     const code = str.charCodeAt(i)
     if (code > 0x7f && code <= 0x7ff) s++
     else if (code > 0x7ff && code <= 0xffff) s += 2
@@ -254,7 +254,7 @@ export function getTime(type) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function() {
+  const later = function () {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -271,7 +271,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function(...args) {
+  return function (...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout
@@ -355,3 +355,162 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+// 驼峰转换下划线
+export function toLine(name) {
+  return name.replace(/([A-Z])/g, '_$1').toLowerCase()
+}
+// 下划线转换驼峰
+export function toHump(str) {
+  return str.replace(/([^_])(?:_+([^_]))/g, function ($0, $1, $2) {
+    return $1 + $2.toUpperCase()
+  })
+}
+
+export function getHtmlTag(type) {
+  let htmlTag = 'input';
+  switch (type) {
+    case 'datetime':
+      htmlTag = 'datetime';
+      break;
+    case 'bigint':
+      htmlTag = 'input';
+      break;
+    case 'varchar':
+      htmlTag = 'input';
+      break;
+    case 'char':
+      htmlTag = 'input';
+      break;
+    case 'tinyint':
+      htmlTag = 'switch';
+      break;
+    case 'longtext':
+      htmlTag = 'textarea';
+      break;
+    case 'decimal':
+      htmlTag = 'input';
+      break;
+  }
+  return htmlTag
+}
+
+export function getJavaType(type) {
+  let javaType = '';
+  switch (type) {
+    case 'datetime':
+      javaType = 'Date';
+      break;
+    case 'bigint':
+      javaType = 'Long';
+      break;
+    case 'varchar':
+      javaType = 'String';
+      break;
+    case 'char':
+      javaType = 'String';
+      break;
+    case 'int':
+      javaType = 'Integer';
+      break;
+    case 'longtext':
+      javaType = 'String';
+      break;
+    case 'tinyint':
+      javaType = 'String';
+      break;
+    case 'decimal':
+      javaType = 'BigDecimal';
+      break;
+    case 'double':
+      javaType = 'BigDecimal';
+      break;
+  }
+  return javaType;
+}
+
+export function listToString(list, separator) {
+  if (!list) {
+    return ''
+  }
+  if (typeof (list) !== 'object') {
+    return list + ''
+  } else {
+    if (list.constructor !== Array) {
+      return list + ''
+    }
+    if (list && list.length > 0) {
+      let str = list[0]
+      for (let i = 1; i < list.length; i++) {
+        str = str + separator + list[i]
+      }
+      return str;
+    }
+    return ''
+  }
+}
+
+export function toAttributes(result) {
+  const list = []
+  const keys = Object.keys(result)
+  keys.forEach((key) => {
+    if (result[key] == null) {
+      return
+    }
+    const item = {
+      key: key,
+      label: key
+    }
+    if (typeof result[key] === 'object') {
+      if (result[key].constructor === Array) {
+        item.type = 'array'
+        const children = []
+        result[key].forEach((child) => {
+          if (typeof child === 'object') {
+            children.push(this.toAttributes(child))
+          } else {
+            const temp = {
+              value: child,
+              type: typeof child
+            }
+            children.push(temp)
+          }
+          item.children = children
+        })
+      } else {
+        item.type = typeof result[key]
+        const children = this.toAttributes(result[key])
+        item.children = children
+      }
+      item.isLeaf = false
+    } else {
+      item.type = typeof result[key]
+      item.isLeaf = true
+      item.value = result[key]
+    }
+    list.push(item)
+  })
+  return list
+}
+export function downloadIamge(imgsrc, name) {
+  // 下载图片地址和图片名
+  let image = new Image();
+  // 解决跨域 Canvas 污染问题
+  image.setAttribute('crossOrigin', 'anonymous');
+  image.onload = function () {
+    let canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    let context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0, image.width, image.height);
+    let url = canvas.toDataURL('image/png'); // 得到图片的base64编码数据
+
+    let a = document.createElement('a'); // 生成一个a元素
+    let event = new MouseEvent('click'); // 创建一个单击事件
+    a.download = name || 'photo'; // 设置图片名称
+    a.href = url; // 将生成的URL设置为a.href属性
+    a.dispatchEvent(event); // 触发a的单击事件
+  };
+  image.src = imgsrc;
+}
+

@@ -47,7 +47,17 @@ module.exports = [
       }
     }
   },
-
+  // mock get asyncRoutes form server
+  {
+    url: '/vue-element-admin/asyncRoutes',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: asyncRoutes
+      }
+    }
+  },
   // mock get all roles form server
   {
     url: '/vue-element-admin/roles',

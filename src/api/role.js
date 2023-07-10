@@ -6,6 +6,12 @@ export function getRoutes() {
     method: 'get'
   })
 }
+export function getAsyncRoutes() {
+  return request({
+    url: '/vue-element-admin/asyncRoutes',
+    method: 'get'
+  })
+}
 
 export function getRoles() {
   return request({

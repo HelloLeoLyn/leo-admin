@@ -85,3 +85,38 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+
+/**
+ * @param {Money} arg
+ * @returns {Boolean}
+ */
+export function isMoney(arg) {
+  let decimalsValue = /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/;
+  return decimalsValue.test(arg);
+}
+
+export const moneyValidator = (rule, value, callback) => {
+  if (!value) {
+    callback();
+  } else {
+    if (isMoney(value)) {
+      callback();
+    } else {
+      return callback(new Error('请输入正确金额'));
+    }
+  }
+}
+export const countValidator = (rule, value, callback, params) => {
+  const index = rule.field.split('.')[1]
+  if (index == '0') {
+    callback()
+  } else {
+    const num = new Number(params[index - 1].startQuantity)
+    const num2 = new Number(params[index].startQuantity)
+    if (num >= num2) {
+      return callback(new Error(rule.message))
+    }
+    callback()
+  }
+}

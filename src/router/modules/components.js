@@ -95,6 +95,12 @@ const componentsRouter = {
       component: () => import('@/views/components-demo/drag-kanban'),
       name: 'DragKanbanDemo',
       meta: { title: 'Drag Kanban' }
+    },
+    {
+      path: 'image-click',
+      component: () => import('@/views/components-demo/image-click'),
+      name: 'ImageClickDemo',
+      meta: { title: 'Image Click' }
     }
   ]
 }

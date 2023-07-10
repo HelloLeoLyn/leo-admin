@@ -1,19 +1,14 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
+      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path"
         :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
-      >
+        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" tag="span"
+        class="tags-view-item" @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+        @contextmenu.prevent.native="openMenu(tag,$event)">
         {{ tag.title }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span v-if="!isAffix(tag)" class="el-icon-close"
+          @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
@@ -74,7 +69,7 @@ export default {
     },
     filterAffixTags(routes, basePath = '/') {
       let tags = []
-      routes.forEach(route => {
+      routes.forEach((route) => {
         if (route.meta && route.meta.affix) {
           const tagPath = path.resolve(basePath, route.path)
           tags.push({
@@ -94,7 +89,7 @@ export default {
       return tags
     },
     initTags() {
-      const affixTags = this.affixTags = this.filterAffixTags(this.routes)
+      const affixTags = (this.affixTags = this.filterAffixTags(this.routes))
       for (const tag of affixTags) {
         // Must have tag name
         if (tag.name) {
@@ -125,6 +120,19 @@ export default {
       })
     },
     refreshSelectedTag(view) {
+      if (view.meta.close) {
+        if (view.meta.close.cycle == 'before') {
+          this.refreshBeforeInvoke(view).then((res) => {
+            if (res) {
+              this.refreshSelectedTagCore(view)
+            }
+          })
+        }
+      } else {
+        this.refreshSelectedTagCore(view)
+      }
+    },
+    refreshSelectedTagCore(view) {
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
         const { fullPath } = view
         this.$nextTick(() => {
@@ -134,22 +142,72 @@ export default {
         })
       })
     },
-    closeSelectedTag(view) {
-      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
-        if (this.isActive(view)) {
-          this.toLastView(visitedViews, view)
-        }
+    refreshBeforeInvoke(view) {
+      return new Promise((resolve) => {
+        this.$confirm(this.$t('common.refresh.save'), {
+          type: 'warning'
+        })
+          .then(() => {
+            resolve(true)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: this.$t('common.refresh.no')
+            })
+          })
       })
     },
+    closeSelectedTag(view) {
+      if (view.meta.close) {
+        if (view.meta.close.cycle == 'before') {
+          this.closeBeforeInvoke(view).then((res) => {
+            if (res) {
+              this.closeSelectedTagCore(view)
+            }
+          })
+        }
+      } else {
+        this.closeSelectedTagCore(view)
+      }
+    },
+    closeSelectedTagCore(view) {
+      this.$store
+        .dispatch('tagsView/delView', view)
+        .then(({ visitedViews }) => {
+          if (this.isActive(view)) {
+            this.toLastView(visitedViews, view)
+          }
+        })
+    },
+    closeBeforeInvoke(view) {
+      return new Promise((resolve) => {
+        this.$confirm(this.$t('common.close.save'), {
+          type: 'warning'
+        })
+          .then(() => {
+            resolve(true)
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: this.$t('common.close.no')
+            })
+          })
+      })
+    },
+
     closeOthersTags() {
       this.$router.push(this.selectedTag)
-      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-        this.moveToCurrentTag()
-      })
+      this.$store
+        .dispatch('tagsView/delOthersViews', this.selectedTag)
+        .then(() => {
+          this.moveToCurrentTag()
+        })
     },
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
-        if (this.affixTags.some(tag => tag.path === view.path)) {
+        if (this.affixTags.some((tag) => tag.path === view.path)) {
           return
         }
         this.toLastView(visitedViews, view)
@@ -203,7 +261,7 @@ export default {
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -252,7 +310,7 @@ export default {
     font-size: 12px;
     font-weight: 400;
     color: #333;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
     li {
       margin: 0;
       padding: 7px 16px;
@@ -275,10 +333,10 @@ export default {
       vertical-align: 2px;
       border-radius: 50%;
       text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
       &:before {
-        transform: scale(.6);
+        transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }
