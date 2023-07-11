@@ -11,8 +11,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="categoryID" prop="categoryID">
-        <Category1688 @change="setCategoryID" :value="product.categoryId" v-if="flag" categoryContent="设置为产品名"
-          @getCategory="setProductName" />
+        <Category1688 v-model="product.categoryId" @change="setCategoryID" categoryContent="设置为产品名" />
       </el-form-item>
       <el-form-item label="groupID" prop="groupID">
         <Group1688 @change="setGroupID" :value="product.groupId" :categoryID="formData.categoryID"
@@ -65,7 +64,8 @@
 
       </el-form-item>
       <el-form-item label="image" prop="image">
-        <Image1688 :ref="$route.params.id" :product-id="$route.params.id" :sources="[]" @getImages="getImages" />
+        <Image1688 v-if="$route.params.id" :ref="$route.params.id" :product-id="$route.params.id" :sources="[]"
+          @getImages="getImages" />
       </el-form-item>
       <el-form-item label="saleInfo" prop="saleInfo">
         <SaleInfo1688 v-if="flag" :id="product.id" @showHistory="showHistory" :values="formData.saleInfo"
@@ -330,6 +330,10 @@ export default {
   watch: {},
 
   mounted() {
+    this.formData.id = this.$route.params.id
+    this.doGet()
+  },
+  created() {
     this.formData.id = this.$route.params.id
     this.doGet()
   },

@@ -4,17 +4,7 @@
         flex-wrap: wrap;">
       <draggable :list="checkedList">
         <el-col v-for="image, index in checkedList" :key="index" style=" width: 200px;height: 200px;">
-          <vue-hover-mask v-if="index == 0">
-            <div class="background" :style="'background-image: url(' + image.url + ');'">
-              <img src="http://localhost:8080/img/0/main.png" alt="Your Image" class="overlay-image">
-            </div>
-            <template v-slot:action>
-              <el-button type="text" size="mini" @click="handleRemoveBtnClick(index)">
-                删除
-              </el-button>
-            </template>
-          </vue-hover-mask>
-          <vue-hover-mask v-else>
+          <vue-hover-mask>
             <el-image :src="image.url" width="100%" class="leo-product-images-item" />
             <template v-slot:action>
               <el-button type="text" size="mini" @click="handleRemoveBtnClick(index)">
@@ -168,33 +158,10 @@ export default {
                   return pi == image.id
                 })
               }
-              const { id, fileType, code, isMain, pixel, moduleType } = image
-              return {
-                id,
-                productId: code,
-                fileType,
-                isMain,
-                pixel,
-                moduleType,
-                status: 0,
-                checked: checkIndex >= 0,
-                url:
-                  service +
-                  '/img/' +
-                  image.code +
-                  '/' +
-                  image.id +
-                  image.fileType +
-                  '?' +
-                  new Date().getTime(),
-                large:
-                  service +
-                  '/img/' +
-                  image.code +
-                  '/' +
-                  +image.id +
-                  image.fileType
-              }
+              image.productId = image.code
+              image.url = service + '/img/' + image.code + '/' + image.name + '?' + new Date().getTime()
+              image.checked = checkIndex >= 0
+              return image
             })
             this.images = images
             this.checkedList = this.images.filter((img) => img.checked)
@@ -232,7 +199,7 @@ export default {
     },
 
     handleRemoveBtnClick(id) {
-      this.checkedList.splice(id,1)
+      this.checkedList.splice(id, 1)
       this.getImages()
     }
   }

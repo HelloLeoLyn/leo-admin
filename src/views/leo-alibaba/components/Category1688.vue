@@ -19,7 +19,7 @@ export default {
   },
   props: {
     value: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: (e) => {
         return e
       }
@@ -35,16 +35,17 @@ export default {
       dict: {}
     }
   },
-
-  mounted() {
-  },
   methods: {
     getCategory() {
       const nodes = this.$refs['cascader'].getCheckedNodes()
       this.$emit('getCategory', nodes[0].data, nodes[0].pathNodes)
     },
     change(e) {
-      this.$emit('change', e)
+      if(typeof e == 'object' && Array.isArray(e)) {
+        this.$emit('change', e[e.length-1])
+      }else{
+        this.$emit('change', e)
+      }
     },
     listToString
   }

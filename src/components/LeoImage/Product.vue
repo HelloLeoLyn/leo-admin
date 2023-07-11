@@ -6,8 +6,7 @@
           <el-image :src="image.url" width="100%" class="leo-product-images-item" />
           <label style="position: absolute" :ref="'checked' + image.id"
             :class="{ 'leo-sm-label-checked': image.checked }"><i class="el-icon-check leo-icon-check"></i></label>
-          <label style="position: absolute" :class="{ 'leo-sm-label-main': image.isMain }" :ref="
-            image.id">
+          <label style="position: absolute" :class="{ 'leo-sm-label-main': image.isMain }" :ref="image.id">
           </label>
           <template v-slot:action>
             <div v-if="image.pixel">
@@ -136,36 +135,13 @@ export default {
                     return pi == image.id
                   })
                 }
-                const { id, fileType, code, isMain, pixel, moduleType } = image
-                return {
-                  id,
-                  productId: code,
-                  fileType,
-                  isMain,
-                  pixel,
-                  moduleType,
-                  status: 0,
-                  checked: checkIndex >= 0,
-                  url:
-                    service +
-                    '/img/' +
-                    image.code +
-                    '/' +
-                    image.id +
-                    image.fileType +
-                    '?' +
-                    new Date().getTime(),
-                  large:
-                    service +
-                    '/img/' +
-                    image.code +
-                    '/' +
-                    +image.id +
-                    image.fileType
-                }
+                image.productId = image.code
+                image.url = service + '/img/' + image.code + '/' + image.name + '?' + new Date().getTime()
+                image.checked = checkIndex >= 0
+                return image
               })
             this.images = images
-            this.$emit('getImages',images)
+            this.$emit('getImages', images)
             this.imageShowList = this.images.filter((img) => img.status != -1)
             this.changeKey++
           })

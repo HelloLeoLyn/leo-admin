@@ -1,18 +1,48 @@
 <template>
   <div class="leo-prepare-send">
-    <el-form :model="form" ref="form" :rules="rules" label-width="220px" size="normal">
+    <el-form
+      :model="form"
+      ref="form"
+      :rules="rules"
+      label-width="220px"
+      size="normal"
+    >
       <el-form-item label="subject" class="input-normal">
         <el-input v-model="product.subject" readonly></el-input>
         {{ product.code }}
       </el-form-item>
-      <el-form-item label="alibaba.subject" prop="alibaba.subject" class="input-normal">
-        <el-input v-model="form.alibaba.subject" maxlength="60" show-word-limit></el-input>
+      <el-form-item
+        label="alibaba.subject"
+        prop="alibaba.subject"
+        class="input-normal"
+      >
+        <el-input
+          v-model="form.alibaba.subject"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="aliexpress.subject" prop="aliexpress.subject" class="input-normal">
-        <el-input v-model="form.aliexpress.subject" maxlength="128" show-word-limit></el-input>
+      <el-form-item
+        label="aliexpress.subject"
+        prop="aliexpress.subject"
+        class="input-normal"
+      >
+        <el-input
+          v-model="form.aliexpress.subject"
+          maxlength="128"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="amazon.subject" prop="amazon.subject" class="input-normal">
-        <el-input v-model="form.amazon.subject" maxlength="128" show-word-limit></el-input>
+      <el-form-item
+        label="amazon.subject"
+        prop="amazon.subject"
+        class="input-normal"
+      >
+        <el-input
+          v-model="form.amazon.subject"
+          maxlength="128"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="6" :offset="0">
@@ -22,10 +52,12 @@
         </el-col>
         <el-col :span="6" :offset="0">
           <el-form-item label="width" prop="width">
-            <el-input v-model="form.width"></el-input> </el-form-item></el-col>
+            <el-input v-model="form.width"></el-input> </el-form-item
+        ></el-col>
         <el-col :span="6" :offset="0">
           <el-form-item label="height" prop="height">
-            <el-input v-model="form.height"></el-input> </el-form-item></el-col>
+            <el-input v-model="form.height"></el-input> </el-form-item
+        ></el-col>
         <el-col :span="6" :offset="0">
           <el-form-item label="thickness" prop="thickness">
             <el-input v-model="form.thickness"></el-input>
@@ -46,18 +78,31 @@
         <el-input v-model="form.carBrand"></el-input>
       </el-form-item>
       <el-form-item label="images" prop="images">
-        <el-button type="primary" size="default" @click="sendToAlibaba">sendToAlibaba</el-button>
-        <Images :product-id="product.id" @onCustomzedClick="onAlibabaCoverClk" :reloadable="true" @getImages="e => {
-          form.images = e;
-        }
-          " :customzedBtn="[
-    { label: '设置封面图', opt: 'alibaba' },
-    { label: '设置包装图', opt: 'package' },
-    { label: '1688详情封面', opt: '1688detail' },
-  ]" />
+        <el-button type="primary" size="default" @click="sendToAlibaba"
+          >sendToAlibaba</el-button
+        >
+        <Images
+          :product-id="product.id"
+          @onCustomzedClick="onAlibabaCoverClk"
+          :reloadable="true"
+          @getImages="
+            e => {
+              form.images = e
+            }
+          "
+          :customzedBtn="[
+            { label: '设置封面图', opt: 'alibaba' },
+            { label: '设置包装图', opt: 'package' },
+            { label: '1688详情封面', opt: '1688detail' }
+          ]"
+        />
         <el-dialog title="" :visible.sync="dialog.show" width="80%">
           <div class="container" v-if="dialog.opt == 'alibaba'">
-            <img class="bottom-image" :src="dialog.coverPartUrl" alt="底层图片" />
+            <img
+              class="bottom-image"
+              :src="dialog.coverPartUrl"
+              alt="底层图片"
+            />
             <img class="top-image" :src="dialog.coverUrl" alt="顶层图片" />
           </div>
           <div class="container-1688detail" v-if="dialog.opt == '1688detail'">
@@ -65,17 +110,40 @@
             <img class="top-image" :src="dialog.coverPartUrl" alt="顶层图片" />
           </div>
           <div v-if="dialog.opt == 'package'">
-            <ImgCutter ref="imgCutterModal" label="选择本地图片" fileType="jpeg" WatermarkText="vue-img-cutter"
-              WatermarkTextFont="12px Sans-serif" WatermarkTextColor="#00ff00" :crossOrigin="options.crossOrigin"
-              :crossOriginHeader="options.crossOriginHeader" :rate="options.rate" :toolBgc="options.toolBgc"
-              :isModal="options.isModal" :showChooseBtn="options.showChooseBtn" :lockScroll="options.lockScroll"
-              :boxWidth="options.boxWidth" :boxHeight="options.boxHeight" :cutWidth="options.cutWidth"
-              :cutHeight="options.cutHeight" :sizeChange="options.sizeChange" :moveAble="options.moveAble"
-              :imgMove="options.imgMove" :originalGraph="options.originalGraph" :WatermarkTextX="options.WatermarkTextX"
-              :WatermarkTextY="options.WatermarkTextY" :smallToUpload="options.smallToUpload"
-              :saveCutPosition="options.saveCutPosition" :scaleAble="options.scaleAble" :previewMode="options.previewMode"
-              :quality="options.quality" :toolBoxOverflow="options.true" :index="options.index" @cutDown="cutDown"
-              @onPrintImg="onPrintImg">
+            <ImgCutter
+              ref="imgCutterModal"
+              label="选择本地图片"
+              fileType="jpeg"
+              WatermarkText="vue-img-cutter"
+              WatermarkTextFont="12px Sans-serif"
+              WatermarkTextColor="#00ff00"
+              :crossOrigin="options.crossOrigin"
+              :crossOriginHeader="options.crossOriginHeader"
+              :rate="options.rate"
+              :toolBgc="options.toolBgc"
+              :isModal="options.isModal"
+              :showChooseBtn="options.showChooseBtn"
+              :lockScroll="options.lockScroll"
+              :boxWidth="options.boxWidth"
+              :boxHeight="options.boxHeight"
+              :cutWidth="options.cutWidth"
+              :cutHeight="options.cutHeight"
+              :sizeChange="options.sizeChange"
+              :moveAble="options.moveAble"
+              :imgMove="options.imgMove"
+              :originalGraph="options.originalGraph"
+              :WatermarkTextX="options.WatermarkTextX"
+              :WatermarkTextY="options.WatermarkTextY"
+              :smallToUpload="options.smallToUpload"
+              :saveCutPosition="options.saveCutPosition"
+              :scaleAble="options.scaleAble"
+              :previewMode="options.previewMode"
+              :quality="options.quality"
+              :toolBoxOverflow="options.true"
+              :index="options.index"
+              @cutDown="cutDown"
+              @onPrintImg="onPrintImg"
+            >
               <template #open>
                 <button>Choose image</button>
               </template>
@@ -87,13 +155,19 @@
               </template>
             </ImgCutter>
             <div class="container">
-              <img class="package-bottom-image" :src="dialog.cutImgHref" alt="底层图片" />
+              <img
+                class="package-bottom-image"
+                :src="dialog.cutImgHref"
+                alt="底层图片"
+              />
               <img class="top-image" :src="dialog.coverUrl" alt="顶层图片" />
             </div>
           </div>
           <span slot="footer">
             <el-button @click="dialog.show = false">Cancel</el-button>
-            <el-button type="primary" @click="generateImages()">生成图片</el-button>
+            <el-button type="primary" @click="generateImages()"
+              >生成图片</el-button
+            >
           </span>
         </el-dialog>
       </el-form-item>
@@ -103,78 +177,172 @@
 
       <el-tabs v-model="platform" type="border-card" tab-position="top">
         <el-tab-pane label="alibaba" name="alibaba">
-          <el-form-item label="alibaba.material" prop="alibaba.material" class="input-middle">
+          <el-form-item
+            label="alibaba.material"
+            prop="alibaba.material"
+            class="input-middle"
+          >
             <el-input v-model="form.alibaba.material"></el-input>
           </el-form-item>
-          <el-form-item label="alibaba.brand" prop="alibaba.brand" class="input-middle">
+          <el-form-item
+            label="alibaba.brand"
+            prop="alibaba.brand"
+            class="input-middle"
+          >
             <el-input v-model="form.alibaba.brand"></el-input>
           </el-form-item>
           <el-form-item label="alibaba.categoryID" prop="alibaba.categoryID">
-            <Category1688 v-model="form.alibaba.categoryID" @change="category1688Chnage" categoryContent="设置为产品名" />
+            <Category1688
+              v-model="form.alibaba.categoryID"
+              @change="category1688Chnage"
+              categoryContent="设置为产品名"
+            />
           </el-form-item>
           <el-form-item label="alibaba.prices">
-            <SaleInfo1688 v-if="product.id" :id="product.id" :values="form.alibaba.saleInfo" ref="saleInfo" />
+            <SaleInfo1688
+              v-if="product.id"
+              :id="product.id"
+              :values="form.alibaba.saleInfo"
+              ref="saleInfo"
+            />
           </el-form-item>
-          <el-form-item label="alibaba.stock" prop="alibaba.stock" class="input-middle">
+          <el-form-item
+            label="alibaba.stock"
+            prop="alibaba.stock"
+            class="input-middle"
+          >
             <el-input v-model="form.alibaba.stock"></el-input>
           </el-form-item>
-          <el-form-item label="alibaba.unit" prop="alibaba.unit" class="input-middle">
+          <el-form-item
+            label="alibaba.unit"
+            prop="alibaba.unit"
+            class="input-middle"
+          >
             <el-select v-model="form.alibaba.unit">
               <el-option label="套" value="套"> </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="alibaba.description" prop="alibaba.description">
-            <el-button type="primary" size="default" @click="generateHtml('alibaba')">generateHtml</el-button>
-            <el-button type="primary" size="default"
-              @click="handleCopy(form.alibaba.description, $event)">copy</el-button>
+            <el-button
+              type="primary"
+              size="default"
+              @click="generateHtml('alibaba')"
+              >generateHtml</el-button
+            >
+            <el-button
+              type="primary"
+              size="default"
+              @click="handleCopy(form.alibaba.description, $event)"
+              >copy</el-button
+            >
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="aliexpress" name="aliexpress">
-          <el-form-item label="aliexpress.material" prop="aliexpress.material" class="input-middle">
+          <el-form-item
+            label="aliexpress.material"
+            prop="aliexpress.material"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.material"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.brand" prop="aliexpress.brand" class="input-middle">
+          <el-form-item
+            label="aliexpress.brand"
+            prop="aliexpress.brand"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.brand"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.oem" prop="aliexpress.oem" class="input-middle">
+          <el-form-item
+            label="aliexpress.oem"
+            prop="aliexpress.oem"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.oem"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.manufacturerPartId" prop="aliexpress.manufacturerPartId" class="input-middle">
+          <el-form-item
+            label="aliexpress.manufacturerPartId"
+            prop="aliexpress.manufacturerPartId"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.manufacturerPartId"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.unit" prop="aliexpress.unit" class="input-middle">
+          <el-form-item
+            label="aliexpress.unit"
+            prop="aliexpress.unit"
+            class="input-middle"
+          >
             <el-select v-model="form.aliexpress.unit">
               <el-option label="套" value="套"> </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="aliexpress.price" prop="aliexpress.price" class="input-middle">
+          <el-form-item
+            label="aliexpress.price"
+            prop="aliexpress.price"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.price"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.stock" prop="aliexpress.stock" class="input-middle">
+          <el-form-item
+            label="aliexpress.stock"
+            prop="aliexpress.stock"
+            class="input-middle"
+          >
             <el-input v-model="form.aliexpress.stock"></el-input>
           </el-form-item>
-          <el-form-item label="aliexpress.description" prop="aliexpress.description">
-            <el-button type="primary" size="default" @click="generateHtml('aliexpress')">generateHtml</el-button>
-            <el-button type="primary" size="default"
-              @click="handleCopy(form.aliexpress.description, $event)">copy</el-button>
+          <el-form-item
+            label="aliexpress.description"
+            prop="aliexpress.description"
+          >
+            <el-button
+              type="primary"
+              size="default"
+              @click="generateHtml('aliexpress')"
+              >generateHtml</el-button
+            >
+            <el-button
+              type="primary"
+              size="default"
+              @click="handleCopy(form.aliexpress.description, $event)"
+              >copy</el-button
+            >
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="amazon" name="amazon">
-          <el-form-item label="amazon.material" prop="amazon.material" class="input-middle">
+          <el-form-item
+            label="amazon.material"
+            prop="amazon.material"
+            class="input-middle"
+          >
             <el-input v-model="form.amazon.material"></el-input>
           </el-form-item>
-          <el-form-item label="amazon.brand" prop="amazon.brand" class="input-middle">
+          <el-form-item
+            label="amazon.brand"
+            prop="amazon.brand"
+            class="input-middle"
+          >
             <el-input v-model="form.amazon.brand"></el-input>
           </el-form-item>
-          <el-form-item label="amazon.unit" prop="amazon.unit" class="input-middle">
+          <el-form-item
+            label="amazon.unit"
+            prop="amazon.unit"
+            class="input-middle"
+          >
             <el-select v-model="form.aliexpress.unit">
               <el-option label="Sets" value="Sets"> </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="amazon.stock" prop="amazon.stock" class="input-middle">
+          <el-form-item
+            label="amazon.stock"
+            prop="amazon.stock"
+            class="input-middle"
+          >
             <el-input v-model="form.amazon.stock"></el-input>
           </el-form-item>
-          <el-form-item label="amazon.price" prop="amazon.price" class="input-middle">
+          <el-form-item
+            label="amazon.price"
+            prop="amazon.price"
+            class="input-middle"
+          >
             <el-input v-model="form.amazon.price"></el-input>
           </el-form-item>
           <el-form-item label="amazon.listing" prop="amazon.listing">
@@ -182,14 +350,24 @@
           </el-form-item>
         </el-tab-pane>
       </el-tabs>
-      <el-form-item style="
+      <el-form-item
+        style="
           position: fixed;
           bottom: 0;
           width: 100%;
           background-color: rgb(244, 250, 250);
-        ">
-        <el-button type="primary" @click="onSubmit" size="mini">立即创建</el-button>
-        <el-button type="primary" @click="save" style="margin-left: 20px;" size="mini">保存</el-button>
+        "
+      >
+        <el-button type="primary" @click="onSubmit" size="mini"
+          >立即创建</el-button
+        >
+        <el-button
+          type="primary"
+          @click="save"
+          style="margin-left: 20px"
+          size="mini"
+          >保存</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
@@ -243,7 +421,6 @@
       width: 800px;
       height: 800px;
     }
-
   }
 
   .container-1688detail {
@@ -268,7 +445,6 @@
       width: 600px;
       height: 600px;
     }
-
   }
 
   .package-bottom-image {
@@ -282,8 +458,6 @@
     width: auto;
     height: 300px;
   }
-
-
 }
 </style>
 <script>
@@ -307,7 +481,9 @@ import { api_python_image_goods_post } from '@/api/leo-python'
 import { imgBase } from '@/api/index'
 import { api_product_alibaba_save } from '@/api/leo-product-alibaba'
 import { listToString } from '@/utils'
-// import { api_image_put } from '@/api/leo-image'
+import { getBase64Image, dataURLtoFile } from '@/utils/image'
+import axios from 'axios'
+import { api_image_put } from '@/api/leo-image'
 export default {
   components: {
     Images,
@@ -317,7 +493,7 @@ export default {
     CssImage,
     ImgCutter
   },
-  data() {
+  data () {
     return {
       options: {
         isModal: false,
@@ -490,7 +666,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     if (this.$route.query.productId) {
       this.product.id = this.$route.query.productId
     }
@@ -498,7 +674,7 @@ export default {
     if (str) {
       this.form = JSON.parse(str)
     }
-    api_get_product_more(this.product.id).then((res) => {
+    api_get_product_more(this.product.id).then(res => {
       this.product = res.data
       this.form.packageSize = this.product.packageSize
       this.form.weight = this.product.weight
@@ -528,58 +704,59 @@ export default {
     })
   },
   methods: {
-    category1688Chnage() {
-      this.form.alibaba.groupID = categoryToGroup(this.form.alibaba.categoryID)
+    category1688Chnage () {
+      this.form.alibaba.groupID = categoryToGroup[this.form.alibaba.categoryID]
     },
-    handleCopy(text, event) {
+    handleCopy (text, event) {
       clip(text, event)
     },
-    onPrintImg(e) {
+    onPrintImg (e) {
       this.dialog.cutImgHref = e.dataURL
     },
-    cutDown(e) {
+    cutDown (e) {
       this.dialog.cutImgHref = e.dataURL
     },
-    sendToAlibaba() {
-      // let _this = this
+    sendToAlibaba () {
+      let _this = this
       this.form.images.forEach(element => {
-        if(element.state==2) {
+        if (element.state == 2) {
           return
         }
         let image = new Image()
         image.src = element.url
         image.setAttribute('crossOrigin', 'anonymous')
-        // image.onload = function () {
-        //   let base64 = getBase64Image(image)
-        //   let newFile = dataURLtoFile(base64, element.uid)
-        //   let formData = new FormData();
-        //   formData.append('file', newFile);
-        //   formData.append('albumID', _this.albumId);
-        //   axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
-        //     'Content-Type': 'multipart/form-data;charset=utf-8'
-        //   })
-        //     .then(res => {
-        //       if (res.data === 'SUCCESS') {
-        //         element.state = 2
-        //         let iData = {
-        //           id: element.id,
-        //           url: data.url,
-        //           state: element.state
-        //         }
-        //         api_image_put(iData).then(({msg}) => {
-        //           this.$notify({
-        //             title: '成功',
-        //             message: msg,
-        //             type: 'success',
-        //             duration: 1000
-        //           });
-        //         })
-        //       }
-        //     })
-        // }
-      });
+        image.onload = function () {
+          let base64 = getBase64Image(image)
+          let newFile = dataURLtoFile(base64, element.uid)
+          let formData = new FormData()
+          formData.append('file', newFile)
+          formData.append('albumID', _this.albumId)
+          axios
+            .post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
+              'Content-Type': 'multipart/form-data;charset=utf-8'
+            })
+            .then(res => {
+              if (res.code == '200') {
+                element.state = 2
+                let iData = {
+                  id: element.id,
+                  url: res.data.url,
+                  state: element.state
+                }
+                api_image_put(iData).then(({ msg }) => {
+                  this.$notify({
+                    title: '成功',
+                    message: msg,
+                    type: 'success',
+                    duration: 1000
+                  })
+                })
+              }
+            })
+        }
+      })
     },
-    onAlibabaCoverClk(img, opt) {
+    onAlibabaCoverClk (img, opt) {
       this.dialog.show = !this.dialog.show
       this.dialog.coverPartUrl = img.url
       this.dialog.opt = opt
@@ -610,19 +787,32 @@ export default {
         this.dialog.coverPath = imgBase + '0/detail-cover.jpg'
         this.dialog.coverPart = img.path
         this.dialog.coverSavePath =
-          imgBase + this.product.id + '/' + this.product.id + '-detail-cover.jpg'
+          imgBase +
+          this.product.id +
+          '/' +
+          this.product.id +
+          '-detail-cover.jpg'
         this.dialog.name = this.product.id + '-detail-cover.jpg'
         this.dialog.isRmbg = false
       }
     },
-    generateImages() {
+    generateImages () {
       if (this.dialog.opt == 'package') {
         let link = document.createElement('a')
         link.setAttribute('href', this.dialog.cutImgHref)
         link.download = 'leo-image-package.jpg'
         link.click()
       }
-      const { coverPath, coverPart, coverCode, coverSavePath, opt, name, isRmbg, imageId } = this.dialog
+      const {
+        coverPath,
+        coverPart,
+        coverCode,
+        coverSavePath,
+        opt,
+        name,
+        isRmbg,
+        imageId
+      } = this.dialog
       const params = {
         coverPath,
         coverPart,
@@ -634,11 +824,11 @@ export default {
         isRmbg,
         imageId
       }
-      api_python_image_goods_post(params).then((res) => {
+      api_python_image_goods_post(params).then(res => {
         this.$notify.success(res.msg)
       })
     },
-    generateHtml(website) {
+    generateHtml (website) {
       if (website == 'aliexpress') {
         let params = {
           images: this.form.images.map(img => img.url),
@@ -646,11 +836,11 @@ export default {
           codes: this.product.code,
           website,
           packingBoxUrl: this.form.aliexpress.packingBoxUrl,
-          packingSizeUrl: this.form.aliexpress.packingSizeUrl,
+          packingSizeUrl: this.form.aliexpress.packingSizeUrl
           // detailCoverUrl:this.form.aliexpress.detailCoverUrl,
           // productDetail:this.form.aliexpress
         }
-        api_goods_templates(params).then((res) => {
+        api_goods_templates(params).then(res => {
           if (res.code == '200') {
             this.form.alibaba.description = res.data
             this.$message.success(res.msg)
@@ -663,7 +853,7 @@ export default {
           models: this.form.models,
           website
         }
-        api_goods_templates(params).then((res) => {
+        api_goods_templates(params).then(res => {
           if (res.code == '200') {
             this.form.alibaba.description = res.data
             this.$message.success(res.msg)
@@ -672,10 +862,10 @@ export default {
       }
     },
 
-    onSubmit() {
-      this.$refs['saleInfo'].valid().then((saleInfoValid) => {
+    onSubmit () {
+      this.$refs['saleInfo'].valid().then(saleInfoValid => {
         if (!saleInfoValid) return
-        this.$refs['form'].validate((valid) => {
+        this.$refs['form'].validate(valid => {
           if (!valid) return
           this.form.alibaba.saleInfo = this.$refs['saleInfo'].getVal()
           this.form.alibaba.shippingInfo = getShippingInfo({
@@ -683,13 +873,13 @@ export default {
             packageSize: this.form.packageSize
           })
           const obj = generateAlibabaObj(this.form.alibaba)
-          api_product_alibaba_save(obj).then((res) => {
+          api_product_alibaba_save(obj).then(res => {
             this.$message.success(res.msg)
           })
         })
       })
     },
-    save() {
+    save () {
       this.form.alibaba.saleInfo = this.$refs['saleInfo'].getVal()
       localStorage.setItem(
         'Goods_' + this.product.id,

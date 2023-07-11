@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { getBase64Image, dataURLtoFile, convertBase64UrlToBlob } from '@/utils/image';
+import { getBase64Image, dataURLtoFile } from '@/utils/image';
 import axios from 'axios';
 export default {
   props: {
