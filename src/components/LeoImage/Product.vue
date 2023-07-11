@@ -50,8 +50,6 @@ import VueHoverMask from 'vue-hover-mask'
 import { getImagesByProductId, api_image_delete } from '@/api/leo-image'
 import { api_get_product } from '@/api/leo-product'
 import { service } from '@/api/index'
-import { api_python_image_standard_overwrite_post } from '@/api/leo-python'
-
 export default {
   components: {
     VueHoverMask
@@ -200,11 +198,6 @@ export default {
       const key = this.getIdIndex(id)
       this.imageUrl = this.images[key].large + '?' + new Date().getTime()
       this.imageId = id
-      this.images[key].checked = !this.images[key].checked
-    },
-    handlePSBtnClick(id) {
-      const key = this.getIdIndex(id)
-      api_python_image_standard_overwrite_post({ imageId: id })
       this.images[key].checked = !this.images[key].checked
     },
     handleRemoveBtnClick(id) {

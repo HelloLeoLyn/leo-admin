@@ -97,18 +97,15 @@ import LeoArrayString from '@/components/LeoArray/string.vue'
 import 'vue-side-catalog/lib/vue-side-catalog.css'
 import LeoWebCollector from '@/components/LeoWebCollector'
 import Category1688 from '@/views/leo-alibaba/components/Category1688.vue'
-import LeoProductImages from '@/components/LeoImage/Product.vue'
 import {
   api_product_image_main,
   product_save,
   api_product_save_more
 } from '@/api/leo-product'
 import { product_common_keys } from '@/utils/dict'
-
 export default {
   name: 'LeoProductAdd',
   components: {
-    LeoProductImages,
     VueHoverMask,
     LeoArrayString,
     SideCatalog,

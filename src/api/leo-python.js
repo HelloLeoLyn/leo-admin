@@ -15,13 +15,6 @@ export function api_python_image_cut_post(data) {
   })
 }
 
-export function api_python_image_standard_overwrite_post(data) {
-  return request({
-    url: service + '/python/image/standard/overwrite',
-    method: 'post',
-    data
-  })
-}
 export function api_python_image_rembg_post(data) {
   return request({
     url: service + '/python/image/rembg',
