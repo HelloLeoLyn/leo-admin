@@ -1,142 +1,162 @@
 <template>
-  <div>
-    <el-form :model="json" ref="form" label-width="80px" :inline="false" size="normal">
-      <el-form-item label="">
-        <el-input v-model="json.name" placeholder="" size="normal" clearable @change=""></el-input>
+  <div style="padding:20px;">
+    <h2>获取图片</h2>
+    <el-select v-model="photo.albumID" clearable filterable>
+      <el-option v-for="item in albumInfos" :key="item.albumID" :label="item.name"
+        :value="item.albumID">
+      </el-option>
+    </el-select>
+    <el-button type="primary" size="default" @click="onGetAblumPhoto">获取图片</el-button>
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="0" v-for="(img, index) in photo.images" :key="index">
+        <img :src="alibabaURLPrefix+img.url" style="width:300px;height:300px;">
+      </el-col>
+    </el-row>
+    <h2>上传图片</h2>
+    <el-form :model="photo" ref="form" label-width="80px" :inline="false" size="normal">
+      <el-form-item label="albumID">
+        <el-select v-model="photo.albumID" clearable filterable>
+          <el-option v-for="item in albumInfos" :key="item.albumID" :label="item.name"
+            :value="item.albumID">
+          </el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="">
-        <el-input v-model="json.description" placeholder="" size="normal" clearable @change=""></el-input>
+      <el-form-item label="name">
+        <el-input v-model="photo.name" placeholder="" size="normal" clearable></el-input>
       </el-form-item>
-      <el-form-item label="">
-        <el-input :value="JSON.stringify(json)" placeholder="" size="normal" clearable @change=""></el-input>
+      <el-form-item label="description">
+        <el-input v-model="photo.description" placeholder="" size="normal" clearable></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="handleCreateAlibabaAlbum">立即创建</el-button>
+      <el-form-item label="drawTxt">
+        <el-checkbox v-model="photo.drawTxt" placeholder="" size="normal" clearable></el-checkbox>
       </el-form-item>
-    </el-form>
-    <el-form :model="image" ref="form" label-width="80px" :inline="false" size="normal">
-      <el-form-item label="">
-        <el-input v-model="image.albumID" placeholder="" size="normal" clearable @change=""></el-input>
+      <el-form-item label="imageBytes">
+        <div v-html="photo.imageBytes">
+        </div>
+        <el-upload class="upload" ref="upload" action="string" :file-list="fileList"
+          :auto-upload="false" :http-request="uploadFile" :on-change="handleChange"
+          multiple="multiple">
+          <el-button slot="trigger" size="small" type="primary" @click="delFile">选取文件</el-button>
+        </el-upload>
       </el-form-item>
-      <el-form-item label="">
-        <el-input v-model="image.name" placeholder="" size="normal" clearable @change=""></el-input>
+      <el-form-item label="webSite">
+        <el-input v-model="photo.webSite" placeholder="" size="normal" clearable></el-input>
       </el-form-item>
-      <el-form-item label="">
-        <el-input v-model="image.description" placeholder="" size="normal" clearable @change=""></el-input>
-      </el-form-item>
-      <el-form-item label="">
-        <el-checkbox v-model="image.drawTxt" placeholder="" size="normal" clearable @change=""></el-checkbox>
-      </el-form-item>
-      <el-form-item label="">
-        <div v-html="image.imageBytes"></div>
-      </el-form-item>
-      <el-form-item label="">
-        <el-input v-model="image.webSite" placeholder="" size="normal" clearable @change=""></el-input>
-      </el-form-item>
-      <el-upload class="upload" ref="upload" action="string" :file-list="fileList" :auto-upload="false"
-        :http-request="uploadFile" :on-change="handleChange" multiple="multiple">
-        <el-button slot="trigger" size="small" type="primary" @click="delFile">选取文件</el-button>
-      </el-upload>
-      <el-button type="primary" @click="onsubmit">保存</el-button>
+
+      <el-button type="primary" @click="onsubmit">上传</el-button>
     </el-form>
   </div>
 </template>
 <script>
-/**
- *
-c
-String
-是
-相册名称。最长30个中文字符
-description
-String
-否
-相册描述。最长2000个中文字符，国际站无需处理此字段
-authority
-Integer
-是
-相册访问权限。取值范围:0-不公开；1-公开；2-密码访问。只有开通旺铺的会员可以设置相册访问权限为“1-公开”和“2-密码访问”，未开通旺铺的会员相册访问权限限制为“0-不公开”，国际站无需处理此字段
-password
-String
-否
-相册访问密码。4-16位非中文字符。当authority为2-密码访问时必填，国际站无需处理此字段
-webSite
-String
-是
-站点信息，指定调用的API是属于国际站（alibaba）还是1688网站（1688）
- */
-import axios from 'axios';
-import { api_photo_alibaba_album_add } from '@/api/leo-photo'
+import axios from 'axios'
+import { api_photo_alibaba_album } from '@/api/leo-photo'
+import { alibabaURLPrefix } from '@/api/index'
 export default {
   data() {
     return {
-      json: {
-        'id': 'com.alibaba.product:alibaba.photobank.album.add-1',
-        name: '奔驰刹车片2023',
-        description: '',
-        authority: 1,
-        webSite: '1688'
+      alibabaURLPrefix,
+      photoApi: {
+        add: {
+          namespace: 'com.alibaba.product',
+          name: 'alibaba.photobank.photo.add',
+          version: 1
+        },
+        getList: {
+          namespace: 'com.alibaba.product',
+          name: 'alibaba.photobank.photo.getList',
+          version: 1
+        },
+        delete: {
+          namespace: 'com.alibaba.product',
+          name: 'alibaba.photobank.photo.delete',
+          version: 1
+        }
       },
-      fileList: [],
-      image: {
-        'id': 'com.alibaba.product:alibaba.photobank.album.add-1',
+      photo: {
+        oceanApiId: null,
+        webSite: '1688',
+        albumID: '',
+        pageNo: 1,
+        pageSize: 8,
+        images: [],
         name: '',
         description: '',
         authority: 1,
-        webSite: '1688',
-        albumID: '335902400',
         drawTxt: false,
         imageBytes: null,
         file: null
-      }
+      },
+
+      fileList: []
     }
+  },
+  mounted() {
+    this.onGetAblum()
   },
   methods: {
     // 点击上传文件触发的额外事件,清空fileList
     delFile() {
-      this.fileList = [];
+      this.fileList = []
     },
     handleChange(file, fileList) {
-      this.fileList = fileList;
+      this.fileList = fileList
       // console.log(this.fileList, "sb");
     },
     // 自定义上传文件
     uploadFile(file) {
-      this.formData.append('file', file.file);
-      // console.log(file.file, "sb2");
+      this.formData.append('file', file.file)
     },
-
-
     onsubmit() {
       // 保存按钮
-      let formData = new FormData();
-      formData.append('file', this.fileList[0].raw);// 拿到存在fileList的文件存放到formData中
+      let formData = new FormData()
+      formData.append('file', this.fileList[0].raw) // 拿到存在fileList的文件存放到formData中
       // 下面数据是我自己设置的数据,可自行添加数据到formData(使用键值对方式存储)
-      formData.append('albumID', this.image.albumID);
-      axios.post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
-        'Content-Type': 'multipart/form-data;charset=utf-8'
-      })
-        .then(res => {
+      formData.append('albumID', this.photo.albumID)
+      axios
+        .post('http://localhost:8080/photo/alibaba/uploadOne', formData, {
+          'Content-Type': 'multipart/form-data;charset=utf-8'
+        })
+        .then((res) => {
           if (res.data === 'SUCCESS') {
             this.$notify({
               title: '成功',
               message: '提交成功',
               type: 'success',
               duration: 1000
-            });
+            })
           }
         })
-    }
-    ,
-
-
-    handleCreateAlibabaAlbum() {
-      api_photo_alibaba_album_add(this.json).then(res => {
-        this.$message.success(res.msg)
+    },
+    onGetAblum() {
+      const albumStr = localStorage.getItem('album')
+      if (albumStr) {
+        this.albumInfos = JSON.parse(albumStr)
+      } else {
+        this.album.oceanApiId = {
+          namespace: 'com.alibaba.product',
+          name: 'alibaba.photobank.album.getList',
+          version: 1
+        }
+        api_photo_alibaba_album(this.album).then((res) => {
+          this.albumInfos = res.data.albumInfos
+          localStorage.setItem('album', JSON.stringify(this.albumInfos))
+        })
+      }
+    },
+    onGetAblumPhoto() {
+      this.photo.oceanApiId = this.photoApi.getList
+      const { oceanApiId, albumID, pageNo, pageSize, webSite } = this.photo
+      api_photo_alibaba_album({
+        oceanApiId,
+        albumID,
+        pageNo,
+        pageSize,
+        webSite
+      }).then((res) => {
+        this.photo.images = res.data.photoInfos
         console.log(res)
       })
-    },
-
-  },
+    }
+  }
 }
 </script>

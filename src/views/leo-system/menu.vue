@@ -39,7 +39,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog :visible="dialogvisible" @close="dialogvisible = false" >
+    <el-dialog :visible="dialogvisible" @close="dialogvisible = false">
       <el-form v-model="sysMenu">
         <el-form-item label="parentId" label-width="100px">
           <el-input v-model="sysMenu.parentId" readonly></el-input>
@@ -64,11 +64,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="icon" label-width="100px">
-          <el-input :value="sysMenu.icon" readonly style="width: 190px" />
+          <el-input v-model="sysMenu.icon" style="width: 190px" />
           <svg-icon :icon-class="sysMenu.icon == null ? 'none' : sysMenu.icon" />
           <el-input v-model="keyword" @focus="
-              iconsVisible = true;
-              handleFocus;
+              iconsVisible = true
+              handleFocus
             " style="width: 220px" placeholder="点击查找图标">
           </el-input>
           <div class="icons-container" v-show="iconsVisible">

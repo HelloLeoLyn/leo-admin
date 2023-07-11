@@ -21,3 +21,10 @@ export function api_photo_alibaba_upload(data) {
     data
   })
 }
+export function api_photo_alibaba_album(data) {
+  return request({
+    url: 'http://localhost:8080/photo/alibaba/album',
+    method: 'post',
+    data
+  })
+}
